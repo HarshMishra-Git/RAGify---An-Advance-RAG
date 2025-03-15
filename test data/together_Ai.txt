@@ -1,0 +1,9 @@
+Together AI is a cloud-based platform that provides infrastructure, tools, and APIs for running and fine-tuning large AI models efficiently. It specializes in distributed computing and open-source AI models, allowing developers and enterprises to train, deploy, and optimize AI applications cost-effectively.
+
+Key Features of Together AI:
+Inference & Training – Provides efficient, scalable infrastructure for serving and fine-tuning LLMs (like LLaMA, Mistral, and Falcon).
+Optimized AI Models – Offers pre-trained and fine-tuned models for various NLP and generative AI tasks.
+API Access – Allows developers to integrate AI capabilities into their applications via APIs.
+Collaborative & Open-Source – Supports community-driven AI research and development.
+Cost-Effective Compute – Utilizes distributed GPU computing to reduce training and inference costs.
+Together AI is widely used in LLM-based applications, RAG systems, and AI research, providing an alternative to commercial AI providers like OpenAI and Anthropic.

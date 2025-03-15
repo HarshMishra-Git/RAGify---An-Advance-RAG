@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time RAG System</title>
+
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+    <!-- JetBrains Mono Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Feather Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+    <!-- Particles.js for background -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- Animated Background -->
+    <div id="particles-js" class="animated-bg"></div>
+    <div class="gradient-overlay"></div>
+    <div class="floating-circle"></div>
+    <div class="floating-circle"></div>
+    <div class="floating-circle"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database me-2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                </svg>
+                <span>RAGify</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#systemInfoModal">
+                            <i data-feather="activity" class="feather-small me-1"></i>
+                            System Info
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container-fluid mt-4">
+        {% block content %}
+        <!-- Placeholder for landing page content -->
+        <div class="jumbotron">
+            <h1>Welcome to the Real-time RAG System</h1>
+            <p>This is a placeholder for the landing page content.  Details about the project will go here.</p>
+            <button type="button" class="btn btn-primary btn-lg">Get Started</button>
+        </div>
+        {% endblock %}
+    </main>
+
+    <!-- System Info Modal -->
+    <div class="modal fade" id="systemInfoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content enhanced-card">
+                <div class="modal-header">
+                    <h5 class="modal-title">System Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Processing Metrics</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">Documents Processed</h6>
+                                    <h2 id="modalDocsProcessed">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">Processing Rate</h6>
+                                    <h2 id="modalProcessingRate">0 docs/sec</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6>System Architecture</h6>
+                    <div class="architecture-diagram mb-3">
+                        <div class="system-component" data-name="Pathway">Data Processing</div>
+                        <div class="system-arrow">→</div>
+                        <div class="system-component" data-name="FAISS">Vector Index</div>
+                        <div class="system-arrow">→</div>
+                        <div class="system-component" data-name="LangGraph">Orchestration</div>
+                        <div class="system-arrow">→</div>
+                        <div class="system-component" data-name="Together AI">LLM</div>
+                    </div>
+
+                    <h6>About This System</h6>
+                    <p>
+                        This real-time RAG system demonstrates how to build a Retrieval-Augmented Generation pipeline
+                        with continuous data processing using Pathway, efficient vector search with FAISS, and 
+                        response generation with Together AI's LLMs.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- D3.js for visualizations -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- Socket.IO -->
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+
+    <!-- Application Scripts -->
+    <script src="{{ url_for('static', filename='js/socket.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/visualizations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+        
+        // Update modal when opened
+        document.addEventListener('DOMContentLoaded', function() {
+            const systemInfoModal = document.getElementById('systemInfoModal');
+            if (systemInfoModal) {
+                systemInfoModal.addEventListener('show.bs.modal', function() {
+                    // Get the latest metrics from the main UI
+                    const docsProcessed = document.getElementById('docsProcessed');
+                    const processRate = document.getElementById('processRate');
+                    
+                    // Update the modal elements
+                    const modalDocsProcessed = document.getElementById('modalDocsProcessed');
+                    const modalProcessingRate = document.getElementById('modalProcessingRate');
+                    
+                    if (docsProcessed && modalDocsProcessed) {
+                        modalDocsProcessed.textContent = docsProcessed.textContent;
+                    }
+                    
+                    if (processRate && modalProcessingRate) {
+                        modalProcessingRate.textContent = processRate.textContent;
+                    }
+                });
+            }
+        });
+
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#0066CC"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    }
+                },
+                "opacity": {
+                    "value": 0.2,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#0066CC",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.4
+                        }
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

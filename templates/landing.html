@@ -1,0 +1,701 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAGify - Real-time Retrieval Augmented Generation</title>
+    
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <!-- AOS - Animate on scroll library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Particles.js for background -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #0066CC;
+            --secondary-color: #34C759;
+            --background-color: #F8F9FA;
+            --text-color: #212529;
+            --card-bg: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .blob-bg {
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            width: 500px;
+            height: 500px;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            opacity: 0.1;
+            filter: blur(40px);
+            animation: blob-move 15s infinite alternate ease-in-out;
+            z-index: -1;
+        }
+        
+        @keyframes blob-move {
+            0% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+                transform: translate(0, 0);
+            }
+            33% {
+                border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+                transform: translate(50px, 25px);
+            }
+            66% {
+                border-radius: 30% 30% 70% 70% / 70% 30% 30% 70%;
+                transform: translate(-25px, 50px);
+            }
+            100% {
+                border-radius: 70% 70% 30% 30% / 30% 70% 70% 30%;
+                transform: translate(25px, -50px);
+            }
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+        
+        .get-started-btn {
+            padding: 12px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            border-radius: 50px;
+        }
+        
+        .get-started-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .get-started-btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            z-index: -1;
+            border-radius: 50px;
+        }
+        
+        .get-started-btn:hover:after {
+            width: 100%;
+        }
+        
+        .feature-card {
+            border-radius: 16px;
+            overflow: hidden;
+            padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            z-index: 1;
+            background-color: var(--card-bg);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-description {
+            opacity: 0.8;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            margin-bottom: 4rem;
+            opacity: 0.8;
+        }
+        
+        .section {
+            padding: 6rem 0;
+        }
+        
+        .cta-section {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 5rem 0;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .footer {
+            padding: 3rem 0;
+            background-color: var(--background-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: inherit;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .system-diagram {
+            width: 100%;
+            height: 300px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            position: relative;
+        }
+        
+        .diagram-component {
+            width: 22%;
+            height: 120px;
+            background-color: white;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .diagram-component:hover {
+            transform: translateY(-10px);
+        }
+        
+        .diagram-arrow {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+        
+        .diagram-arrow:before, .diagram-arrow:after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid var(--secondary-color);
+            border-top: 2px solid var(--secondary-color);
+            transform: translate(0, -50%) rotate(45deg);
+        }
+        
+        .diagram-title {
+            font-weight: 600;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+        }
+        
+        .diagram-subtitle {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+        
+        /* Add floating shapes animation */
+        .floating-shape {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .shape1 {
+            width: 150px;
+            height: 150px;
+            top: 15%;
+            left: 10%;
+            background: linear-gradient(45deg, rgba(0,102,204,0.1), rgba(52,199,89,0.1));
+            border-radius: 63% 37% 30% 70% / 50% 45% 55% 50%;
+            animation-delay: 0s;
+        }
+        
+        .shape2 {
+            width: 200px;
+            height: 200px;
+            bottom: 20%;
+            right: 5%;
+            background: linear-gradient(45deg, rgba(52,199,89,0.1), rgba(0,102,204,0.1));
+            border-radius: 37% 63% 70% 30% / 45% 50% 50% 55%;
+            animation-delay: -5s;
+        }
+        
+        .shape3 {
+            width: 100px;
+            height: 100px;
+            bottom: 30%;
+            left: 20%;
+            background: linear-gradient(45deg, rgba(0,102,204,0.1), rgba(52,199,89,0.1));
+            border-radius: 50% 50% 70% 30% / 30% 30% 70% 70%;
+            animation-delay: -10s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            50% {
+                transform: translateY(0px) rotate(10deg);
+            }
+            75% {
+                transform: translateY(20px) rotate(5deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Floating Shapes -->
+    <div class="floating-shape shape1"></div>
+    <div class="floating-shape shape2"></div>
+    <div class="floating-shape shape3"></div>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="blob-bg"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 animate__animated animate__fadeInLeft">
+                    <h1 class="hero-title">RAGify: Real-time Retrieval Augmented Generation</h1>
+                    <p class="hero-subtitle">Enhance your AI responses with accurate and relevant information retrieval, powered by state-of-the-art RAG technology.</p>
+                    <a href="/app" class="btn get-started-btn animate__animated animate__pulse animate__infinite animate__slower">
+                        Get Started
+                        <i data-feather="arrow-right" class="ms-2"></i>
+                    </a>
+                </div>
+                <div class="col-lg-6 animate__animated animate__fadeInRight">
+                    <img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?auto=format&fit=crop&q=80&w=2232" alt="AI Visualization" class="img-fluid rounded-4" style="box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Powerful RAG Features</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Our platform combines cutting-edge retrieval systems with state-of-the-art language models to provide accurate and contextually relevant responses.
+            </p>
+            
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-feather="database"></i>
+                        </div>
+                        <h3 class="feature-title">Real-time Document Processing</h3>
+                        <p class="feature-description">
+                            Upload and process documents instantly, with automatic chunking and vectorization for efficient retrieval.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-feather="search"></i>
+                        </div>
+                        <h3 class="feature-title">Semantic Search</h3>
+                        <p class="feature-description">
+                            Find the most relevant information with advanced vector search powered by FAISS technology.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-feather="message-square"></i>
+                        </div>
+                        <h3 class="feature-title">LLM Integration</h3>
+                        <p class="feature-description">
+                            Generate accurate responses with Together AI's large language models, with full context awareness.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works Section -->
+    <section class="section bg-light" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">How It Works</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Our RAG system uses a sophisticated pipeline to retrieve and generate accurate responses.
+            </p>
+            
+            <div class="system-diagram" data-aos="fade-up" data-aos-delay="200">
+                <div class="diagram-arrow"></div>
+                
+                <div class="diagram-component">
+                    <i data-feather="file-text" size="32"></i>
+                    <div class="diagram-title">Document Upload</div>
+                    <div class="diagram-subtitle">Process & Chunk</div>
+                </div>
+                
+                <div class="diagram-component">
+                    <i data-feather="database" size="32"></i>
+                    <div class="diagram-title">Vector Store</div>
+                    <div class="diagram-subtitle">FAISS Index</div>
+                </div>
+                
+                <div class="diagram-component">
+                    <i data-feather="search" size="32"></i>
+                    <div class="diagram-title">Retrieval</div>
+                    <div class="diagram-subtitle">Semantic Search</div>
+                </div>
+                
+                <div class="diagram-component">
+                    <i data-feather="cpu" size="32"></i>
+                    <div class="diagram-title">LLM Response</div>
+                    <div class="diagram-subtitle">Together AI</div>
+                </div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-md-6" data-aos="fade-right">
+                    <h3>Real-time Processing</h3>
+                    <p>
+                        Upload documents of any format, and our system will automatically process them in real-time.
+                        The documents are chunked into manageable pieces, vectorized using state-of-the-art embeddings,
+                        and stored in a high-performance vector database.
+                    </p>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-left">
+                    <h3>Accurate Responses</h3>
+                    <p>
+                        When you submit a query, our system retrieves the most relevant context from your documents
+                        and passes it to a Large Language Model to generate a response. This ensures that responses
+                        are not only coherent but also factually accurate and based on your specific data.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section" data-aos="fade-up">
+        <div class="container text-center">
+            <h2 class="mb-4">Ready to Enhance Your AI Responses?</h2>
+            <p class="mb-5 px-md-5 mx-auto" style="max-width: 700px;">
+                Start using our RAG system today and experience the power of context-aware AI responses.
+            </p>
+            <a href="/app" class="btn btn-light btn-lg px-5 py-3 rounded-pill fw-bold">
+                Get Started Now
+                <i data-feather="arrow-right" class="ms-2"></i>
+            </a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">RAGify</h5>
+                    <p class="mb-3">
+                        A powerful Retrieval Augmented Generation system for enhanced AI responses.
+                    </p>
+                </div>
+                
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h6 class="mb-3">Features</h6>
+                    <ul class="footer-links">
+                        <li><a href="#features">Document Processing</a></li>
+                        <li><a href="#features">Vector Search</a></li>
+                        <li><a href="#features">LLM Integration</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h6 class="mb-3">Resources</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4">
+                    <h6 class="mb-3">About</h6>
+                    <p>
+                        Built with Pathway, FAISS, and Together AI to provide state-of-the-art retrieval augmented generation capabilities.
+                    </p>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <p class="mb-0">© 2025 RAGify. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="d-flex justify-content-md-end">
+                        <a href="#" class="me-3"><i data-feather="github"></i></a>
+                        <a href="#" class="me-3"><i data-feather="twitter"></i></a>
+                        <a href="#"><i data-feather="linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS - Animate on scroll library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+        
+        // Initialize AOS animation library
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Ensure all Get Started buttons work correctly
+        document.addEventListener('DOMContentLoaded', function() {
+            const allGetStartedButtons = document.querySelectorAll('.get-started-btn, .cta-section .btn-light');
+            allGetStartedButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = '/app';
+                });
+            });
+        });
+        
+        // Particles.js config
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#0066CC"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.3,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#0066CC",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.4
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>

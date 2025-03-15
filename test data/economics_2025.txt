@@ -1,0 +1,36 @@
+
+# Global Economic Outlook 2025
+
+## Growth Projections
+
+The global economy continues its post-pandemic evolution with uneven growth patterns across regions. Current projections for 2025:
+- Global GDP Growth: 3.8%
+- Advanced Economies: 2.7%
+- Emerging Markets: 4.9%
+- Developing Economies: 5.3%
+
+China's economic restructuring has successfully transitioned from export-dependency to domestic consumption, maintaining 5.1% growth despite demographic challenges. India leads global growth at 7.4%, benefiting from manufacturing relocation and digital service exports.
+
+## Energy Transition Economics
+
+The renewable energy sector now employs 42 million people globally, exceeding fossil fuel industry employment for the first time in history. Green hydrogen production costs have fallen 68% since 2022, making it economically viable for industrial applications and heavy transport.
+
+Investment in climate adaptation infrastructure has reached $840 billion annually, creating an estimated 12 million jobs worldwide while reducing projected climate-related economic losses by an estimated $3.2 trillion over the next decade.
+
+## Digital Currency Adoption
+
+Central Bank Digital Currencies (CBDCs) are now operational in 28 countries, representing 64% of global GDP. The Digital Yuan leads with 970 million active users, while the Digital Euro and Digital Dollar have achieved adoption rates of 38% and 26% respectively in their regions.
+
+Cross-border CBDC interoperability protocols established in March 2025 have reduced international settlement times from days to seconds while cutting transaction costs by over 90%, reshaping global trade dynamics.
+
+## Labor Market Transformation
+
+Automation has displaced 18 million manufacturing and service jobs since 2023, while creating 24 million new positions in technology, green energy, and healthcare sectors. The four-day workweek has become standard in 40% of advanced economy workplaces, with productivity data showing an average 8% output increase despite reduced hours.
+
+The gig economy has stabilized at 28% of the global workforce, with new labor regulations in Europe and parts of Asia establishing minimum protections for contract workers.
+
+## Supply Chain Resilience
+
+Regionalization of supply chains continues, with 62% of multinational corporations reporting significant reshoring or nearshoring initiatives. North American manufacturing capacity has increased 34% since 2022, while Southeast Asian manufacturing hubs in Vietnam, Indonesia, and Thailand have seen 47% growth.
+
+Advanced manufacturing techniques including distributed 3D printing networks and autonomous factories have reduced production costs by an average of 23% while improving supply chain resilience.

@@ -1,0 +1,34 @@
+economics_2025.txt
+What are the global GDP growth projections for 2025?
+How has digital currency adoption evolved, and what are its economic impacts?
+What trends are shaping labor market transformation in 2025?
+
+
+environment_2025.txt
+What is the current global CO2 concentration, and how is it impacting climate targets?
+How has renewable energy contributed to global electricity generation in 2025?
+What initiatives are improving ocean health and biodiversity restoration?
+
+
+finance_2025.txt
+What are the major financial market trends in Q2 2025?
+How have AI-driven investment trends performed compared to human-managed funds?
+What role is sustainable finance playing in institutional investment strategies?
+
+
+healthcare_2025.txt
+What breakthrough medical technologies have been approved in 2025?
+How has telemedicine evolved, and what impact does it have on healthcare accessibility?
+What are the latest advancements in longevity research and anti-aging treatments?
+
+
+politics_2025.txt
+What are the key geopolitical shifts in the Indo-Pacific region in 2025?
+How has digital democracy influenced governance models worldwide?
+What major international climate policies and regulations have been enforced in 2025?
+
+
+sports_2025.txt
+What were the key innovations and trends from the 2024 Paris Olympics?
+How has FIFA's Club World Cup expansion affected the global football calendar?
+What are the latest developments in esports and its potential Olympic inclusion?
