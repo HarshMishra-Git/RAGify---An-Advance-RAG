@@ -7,6 +7,7 @@ import time
 import json
 import re
 import mimetypes
+import eventlet
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -23,7 +24,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "dev_secret_key")
 
 # Initialize SocketIO
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*",async_mode="eventlet", message_queue="redis://")
 
 # Check for Together AI API key
 together_api_key = os.environ.get("TOGETHER_API_KEY", "")
