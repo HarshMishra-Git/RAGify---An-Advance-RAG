@@ -12,3 +12,5 @@ flask-socketio>=5.5.1
 numpy>=2.2.3
 langchain>=0.3.20
 langchain-core>=0.3.44
+eventlet
+redis
