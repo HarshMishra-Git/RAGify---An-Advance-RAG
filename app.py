@@ -300,4 +300,4 @@ def update_metrics_data():
 # logger.info("Metrics update thread started")
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=False)
